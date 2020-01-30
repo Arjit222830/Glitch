@@ -3,6 +3,7 @@ var app = express();
 var bodyParser = require("body-parser");
 var mongoose = require("mongoose");
 const {Register,validate}= require('./register');
+const {Team,validateTeam}= require('./team');
 
 var urlencodedParser = bodyParser.urlencoded({ extended: false });
 
@@ -50,6 +51,21 @@ app.get("/quiz", function(req, res){
 
 app.get("/quiz/final", function(req, res){
 	res.render("questions_round2");
+});
+
+app.post('/submit',async (req,res)=>{
+    const {error}= validateTeam(req.body);//result.error(joi package)
+    if(error)
+        return res.status(400).send(error.details[0].message);
+    
+    const team= new Team({
+        teamName: req.body.teamName,
+        points: req.body.points
+    });
+    
+    await team.save();
+    
+    res.send({link:'/'});
 });
 
 app.get("/:randomText", function(req, res){
