@@ -1,9 +1,9 @@
-var counter=0;
 
     $(document).ready(()=>{
         $("#form").submit( (e)=>{
             e.preventDefault();
-            for(var x=0;x<2;x++)
+            var counter=0;
+            for(var x=0;x<30;x++)
             {
                 if($("#answer"+(x+1)+":checked").val()==1)
                     counter++;
@@ -17,7 +17,7 @@ var counter=0;
                 },
                 method: "POST",
                 success : function(data){
-                    console.log("fdfss");
+                    window.location.replace(data.link);
                 },
                 error:function(err){
                     alert(JSON.stringify(err.responseText));
@@ -25,5 +25,9 @@ var counter=0;
             }); 
         });
     });
+
+    $('#myModal').on('shown.bs.modal', function () {
+        $('#myInput').trigger('focus')
+      })
 
 console.log(counter);
