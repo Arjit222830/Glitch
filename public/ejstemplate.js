@@ -1,14 +1,16 @@
 $('#myModal').on('shown.bs.modal', function () {
     $('#myInput').trigger('focus')
   })
+  
+ 
 
 $(document).ready(()=>{
     $("#form1").submit( (e)=>{
         e.preventDefault();
         var counter=0;
-        for(var x=0;x<30;x++)
+        for(var x=0;x<quizzes.length;x++)
         {
-            if($("#answer"+(x+1)+":checked").val()==1)
+            if($("#answer"+(x+1)+":checked").val() == quizzes[x].correctOption)
                 counter++;
         }
         console.log(counter);
@@ -28,6 +30,34 @@ $(document).ready(()=>{
         }
         console.log(counter);
         ajax_call(counter);
+    });
+});
+
+
+$(document).ready(()=>{
+    $("#form3").submit( (e)=>{
+        e.preventDefault();
+        $.ajax({
+            url: '/quiz/add',
+            data :{
+                question: $('#question').val(),
+                type: $("#type:checked").val(),
+                A: $('#A').val(),
+                B: $('#B').val(),
+                C: $('#C').val(),
+                D: $('#D').val(),
+                correctOption: $("#correctOption:checked").val()
+                },
+
+            method: "POST",
+            success : function(data){
+                alert(data.message);
+                window.location.replace("/admin");
+            },
+            error:function(err){
+                alert(JSON.stringify(err.responseText));
+            }
+        }); 
     });
 });
 

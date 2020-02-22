@@ -4,8 +4,7 @@ var bodyParser = require("body-parser");
 var mongoose = require("mongoose");
 const {Register,validate}= require('./register');
 const {Team,validateTeam}= require('./team');
-
-var urlencodedParser = bodyParser.urlencoded({ extended: false });
+const {Quiz,validateQuiz}= require('./quiz');
 
 mongoose.connect('mongodb://localhost:27017/glitch', {useNewUrlParser: true});
 
@@ -23,6 +22,11 @@ app.set("view engine", "ejs");
 
 app.get("/", function(req, res){
 	res.render("index");
+});
+
+
+app.get("/admin", function(req, res){
+	res.render("admin");
 });
 
 app.get("/register", function(req, res){
@@ -45,12 +49,9 @@ app.post('/register',async (req,res)=>{
     res.redirect("/");
 });
 
-app.get("/quiz", function(req, res){
-	res.render("questions_round1");
-});
-
-app.get("/quiz/final", function(req, res){
-	res.render("questions_round2");
+app.get("/quiz/:type", async function(req, res){
+    const quizzes= await Quiz.find({type: req.params.type});
+	res.render("questions_round",{quizzes:quizzes, type: req.params.type});
 });
 
 app.post('/submit',async (req,res)=>{
@@ -66,6 +67,29 @@ app.post('/submit',async (req,res)=>{
     await team.save();
     
     res.send({link:'/'});
+});
+
+app.post('/quiz/add',async (req,res)=>{
+    
+    const {error}= validateQuiz(req.body);//result.error(joi package)
+    if(error)
+        return res.status(400).send(error.details[0].message);
+    
+    const quiz= new Quiz({
+        question: req.body.question,
+        type: req.body.type,
+        options: {
+            A:req.body.A,
+            B:req.body.B,
+            C:req.body.C,
+            D:req.body.D
+        },
+        correctOption: req.body.correctOption
+    });
+    
+    await quiz.save();
+    
+    res.send({link:'/admin/6MayMMExW08NiAq92aMWKSNjWANjsxzhnjaskdhoijwasmx',message:"A question is added"});
 });
 
 app.get("/:randomText", function(req, res){

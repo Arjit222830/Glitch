@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <title>Quiz</title>
+    
+        <link rel="stylesheet" type="text/css" href="../question.css">
+        <link rel="stylesheet" href="../bootstrap.min.css">
+        <script src="../jquery.min.js"></script>
+        <script src="../bootstrap.min_cloudfare.js"></script>
+        <script src="../bootstrap.min.js"></script>
+</head>
+<body >
+
+    <h1 class="heading">QUIZ ROUND- (<%- type.toUpperCase() %> ROUND)</h1> 
+    
+    <form id="form1">
+        <div class="text-center">
+            <label for="teamName">Team Name</label>
+            <input type="text" placeholder="Team Name" id="teamName" name="teamName">
+        </div>
+
+        <ol  class="contain">
+            <% for(var i=0;i<quizzes.length;i++) { %>
+            <li><p><%= quizzes[i].question %></p>
+                <ul>
+
+                    <li><input type="radio" id="answer<%- (i+1) %>" name="answer<%- (i+1) %>" value="A"><%- quizzes[i].options.A %></li>
+                    <li><input type="radio" id="answer<%- (i+1) %>" name="answer<%- (i+1) %>" value="B"><%- quizzes[i].options.B %></li>
+                    <li><input type="radio" id="answer<%- (i+1) %>" name="answer<%- (i+1) %>" value="C"><%- quizzes[i].options.C %></li>
+                    <li><input type="radio" id="answer<%- (i+1) %>" name="answer<%- (i+1) %>" value="D"><%- quizzes[i].options.D %></li>
+                </ul>
+            </li><br>
+        <% } %>
+        </ol>
+
+        <div class="text-center button">
+            <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#exampleModal">
+                Submit
+            </button>
+        </div>
+                  
+        <!-- Modal -->
+        <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">CONFIRMATION</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        Do you want to submit your answers
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
+                        <button type="submit" id="sub" class="btn btn-primary">yes</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+    </form>
+
+    <script>
+         var quizzes = <%- JSON.stringify(quizzes) %>
+    </script>
+    <script src="../ejstemplate.js"></script>
+    
+</body>
+</html>

@@ -1,0 +1,44 @@
+<!DOCTTYPE html>
+<html>
+    <head>
+            <meta charset="UTF-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <meta http-equiv="X-UA-Compatible" content="ie=edge">
+            <title>Quiz</title>
+        
+            <link rel="stylesheet" type="text/css" href="./question.css">
+            <link rel="stylesheet" href="./bootstrap.min.css">
+            <script src="./jquery.min.js"></script>
+            <script src="./bootstrap.min_cloudfare.js"></script>
+            <script src="./bootstrap.min.js"></script>
+        
+    </head> 
+    
+    <body>
+        <div class="wrapper">
+
+            <form id="form3">
+                <label for="question" style="margin-right:1.5vw">Question</label>
+                <input type="text" placeholder="Question" id="question" name="question"><br>
+                <label for="type" style="margin-right:1.5vw">Type</label>
+                <input type="radio" id="type" name="type" value="first">First Round
+                <input style="margin-left:1vw" type="radio" id="type" name="type" value="final">Final Round <br>
+                <label for="A" style="margin-right:5.4vw">A</label>
+                <input type="text" placeholder="Option A" id="A" name="A">
+                <input type="radio" id="correctOption" name="correctOption" value="A"><br>
+                <label for="B" style="margin-right:5.4vw">B</label>
+                <input type="text" placeholder="Option B" id="B" name="B">
+                <input type="radio" id="correctOption" name="correctOption" value="B"><br>
+                <label for="C" style="margin-right:5.4vw">C</label>
+                <input type="text" placeholder="Option C" id="C" name="C">
+                <input type="radio" id="correctOption" name="correctOption" value="C"><br>
+                <label for="D" style="margin-right:5.4vw">D</label>
+                <input type="text" placeholder="Option D" id="D" name="D">
+                <input type="radio" id="correctOption" name="correctOption" value="D"><br>
+                <input id="sb" type="submit">
+            </form>
+            
+        </div>
+        <script src="ejstemplate.js"></script>
+    </body>
+</html>
